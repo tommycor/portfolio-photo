@@ -1,0 +1,23 @@
+$xs = 360px;
+$sm = 767px;
+$md = 1025px;
+$lg = 1280px;
+$xl = 1400px;
+
+@mixin respondTo($media){
+	if $media = $xs {
+		@media(max-width: $ipad){ @content; }
+	}
+	if $media = $sm {
+		@media(max-width: $smallDesktop){ @content; }
+	}
+	if $media = $md {
+		@media(max-width: $wide ){ @content; }
+	}
+	if $media = $lg {
+		@media(max-width: $wide ){ @content; }
+	}
+	if $media = $xl {
+		@media(min-width: $extraWide ){ @content; }
+	}
+}
