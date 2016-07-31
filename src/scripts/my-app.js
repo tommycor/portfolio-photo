@@ -1,17 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, Link, browserHistory } from 'react-router';
+// import page from 'page';
 
-var MyApp = React.createClass({
-	render: function() {
-		return (
-			<h1>Tomplop</h1>
-		);
-	}
-});
+import Home from './components/Home';
+
+// var MyApp = React.createClass({
+// 	render: function() {
+// 		return (
+// 			<div>
+				
+// 			</div>
+// 		);
+// 	}
+// });
 
 
 
-ReactDOM.render(
-	<MyApp />,
-	document.getElementById('my-app')
+ReactDOM.render((
+	<Router history={browserHistory}>
+		<Route path="/" component={Home} />
+	</Router>
+	),document.getElementById('my-app')
 );
