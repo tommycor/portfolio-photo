@@ -44,6 +44,17 @@
 	}
 }
 
+.o-box--2by1 {
+	@extends .o-box
+	&:before {
+		position relative
+		content ''
+		display inline-block
+		width 200%
+		padding-top 50%
+	}
+}
+
 .o-box--1by4 {
 	@extends .o-box
 	&:before {
