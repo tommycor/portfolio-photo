@@ -10,6 +10,7 @@
     "build": "gulp build"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "html5-history-api": "^4.2.5",
     "normalize.css": "^3.0.3",
     "page": "^1.7.1",

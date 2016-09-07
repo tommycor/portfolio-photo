@@ -1,10 +1,11 @@
 import React from 'react';
 
-import Slideshow from './Slideshow';
+import SlideshowHome from './SlideshowHome';
 
 var Home = React.createClass({
 
 	getInitialState() {
+
 		return {
 			albums: [{
 					key: 1,
@@ -22,15 +23,15 @@ var Home = React.createClass({
 					key: 3,
 					picture: './assets/medias/TEMP/04.jpg',
 					title: 'Day dreaming'
-				}],
-			test:"blabla"
+				}
+			]
 		};
 	},
 
 	render: function() {
 		return (
 			<div className="u-fit u-bg--black">
-				<Slideshow className="u-w10of12 u-marg-l-w1of12" slides={this.state.albums}/>
+				<SlideshowHome changeSlide={this.changeCurrentIndex} slides={this.state.albums}/>
 			</div>
 		);
 	},
