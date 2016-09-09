@@ -13,25 +13,26 @@ var SlideshowHome = React.createClass({
 	        mousePos: {x : 0, y : 0},
 	    };
 	},
-	componentWillMount() {
-	    this.mousePos = { x: this.state.mousePos.x, y: this.state.mousePos.y };
-	},
 	componentDidMount() {
 	    this.update();  
 	},
 
 	mouseMove: function( event ) {
-		this.mousePos.x = event.pageX;
-		this.mousePos.y = event.pageY;
+		this.setState({
+			mousePos: {
+				x: event.pageX,
+				y: event.pageY
+			}
+		});
 	},
 
 	update: function() {
-		this.setState({
-			mousePos: {
-				x: this.state.mousePos.x + (this.mousePos.x - this.state.mousePos.x) * 0.3,
-				y: this.state.mousePos.y + (this.mousePos.y - this.state.mousePos.y) * 0.3
-			}
-		});
+		// this.setState({
+		// 	mousePos: {
+		// 		x: this.state.mousePos.x + (this.mousePos.x - this.state.mousePos.x) * 0.3,
+		// 		y: this.state.mousePos.y + (this.mousePos.y - this.state.mousePos.y) * 0.3
+		// 	}
+		// });
 
 		requestAnimationFrame( this.update );
 	},
@@ -51,7 +52,7 @@ var SlideshowHome = React.createClass({
 					{this.props.slides.map( (item, i) => {
 						let status = i < this.state.currentIndex ? 'prev' : i > this.state.currentIndex ? 'next' : 'current';
 						return(
-							<SlidePicture status={ status } key={i} index={i} register={this.registerSlide} deleter={this.deleterSlide} content={item} mousePos={this.state.mousePos} />
+							<SlidePicture status={ status } mousePos={this.state.mousePos} key={i} index={i} register={this.registerSlide} deleter={this.deleterSlide} content={item} mousePos={this.state.mousePos} />
 						);
 					})}
 				</div>
