@@ -31,6 +31,7 @@ var Home = React.createClass({
 	render: function() {
 		return (
 			<div className="u-fit u-bg--black">
+				<div className="c-net u-fit-w u-absolute u-pos-y-center u-bg--white"></div>
 				<SlideshowHome changeSlide={this.changeCurrentIndex} slides={this.state.albums}/>
 			</div>
 		);

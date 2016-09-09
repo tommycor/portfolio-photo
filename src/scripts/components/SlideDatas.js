@@ -21,7 +21,7 @@ var SlideDatas = React.createClass({
 		});
 
 		return (
-			<div className={'c-slide-titles__container u-alig-left o-wrapper--panel u-fit-w u-pad-x-sm | '+ classState}> 
+			<div className={'c-slide-titles__container u-alig-left o-wrapper--panel u-fit-w u-pad-a-sm | '+ classState}> 
 				<h2 className="t-h3 u-italic u-color--white">{this.props.content.title}</h2>
 			</div>
 		);
