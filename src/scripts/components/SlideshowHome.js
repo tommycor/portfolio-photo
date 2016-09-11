@@ -10,7 +10,10 @@ var SlideshowHome = React.createClass({
 
 	getInitialState() {
 	    return {
-	        mousePos: {x : 0, y : 0},
+	        mousePos: {
+				x: window.innerWidth * .5,
+				y: window.innerHeight * .5,
+			}
 	    };
 	},
 	componentDidMount() {
