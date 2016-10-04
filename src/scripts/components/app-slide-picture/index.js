@@ -9,7 +9,8 @@ Vue.component('app-slide-picture', {
 	mixins: [slide],
 
 	props: {
-		content: { type: Object, default: {} }
+		content: 	{ type: Object, default: {} },
+		mousePos: 	{ type: Object, default: {x: window.innerWidth * .5 , y: window.innerHeight * .5}}
 	},
 
 	data: function() {
@@ -19,7 +20,7 @@ Vue.component('app-slide-picture', {
 			winCenter: {
 				x: window.innerWidth * .5,
 				y: window.innerHeight * .5
-			}
+			},
 		};
 	},
 
@@ -53,27 +54,28 @@ Vue.component('app-slide-picture', {
 
 		update: function() {
 
-			// if( this.props.status === 'current' )  {
-			// 	let distX = this.props.mousePos.x - this.state.winCenter.x;
-			// 	let distY = this.props.mousePos.y - this.state.winCenter.y;
-			// 	let dist = Math.sqrt(distX * distX + distY * distY);
+			if( this.status === 'current' )  {
 
-			// 	let maxR = .0000005;
+				let distX = this.mousePos.x - this.winCenter.x;
+				let distY = this.mousePos.y - this.winCenter.y;
+				let dist = Math.sqrt(distX * distX + distY * distY);
 
-			// 	this.rot.x = -maxR * distX * dist ;
-			// 	this.rot.y = maxR * distY * dist * 1.5;
+				let maxR = .0000005;
 
-			// 	this.currentRot.x += ( this.rot.x - this.currentRot.x) * .05;
-			// 	this.currentRot.y += ( this.rot.y - this.currentRot.y) * .05;
+				this.rot.x = -maxR * distX * dist ;
+				this.rot.y = maxR * distY * dist * 1.5;
 
-			// 	this.pos.x = -distX * .03;
-			// 	this.pos.y = -distY * .03;
+				this.currentRot.x += ( this.rot.x - this.currentRot.x) * .05;
+				this.currentRot.y += ( this.rot.y - this.currentRot.y) * .05;
 
-			// 	this.currentPos.x += ( this.pos.x - this.currentPos.x) * 0.05;
-			// 	this.currentPos.y += ( this.pos.y - this.currentPos.y) * 0.05;
+				this.pos.x = -distX * .03;
+				this.pos.y = -distY * .03;
 
-			// 	this.picture.style.transform = 'rotateX('+this.currentRot.y+'rad) rotateY('+this.currentRot.x+'rad) translateX('+this.currentPos.x+'px) translateY('+this.currentPos.y+'px) translateZ(0)'	;		
-			// }
+				this.currentPos.x += ( this.pos.x - this.currentPos.x) * 0.05;
+				this.currentPos.y += ( this.pos.y - this.currentPos.y) * 0.05;
+
+				this.$els.picture.style.transform = 'rotateX('+this.currentRot.y+'rad) rotateY('+this.currentRot.x+'rad) translateX('+this.currentPos.x+'px) translateY('+this.currentPos.y+'px) translateZ(0)'	;		
+			}
 
 
 			requestAnimationFrame( this.update );

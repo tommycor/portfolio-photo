@@ -16,11 +16,11 @@ module.exports = {
 		return {
 			currentIndex: 0,
 			isAnimating: false,
+			nbrSlides: 0
 		};
 	},
 
 	compiled: function() {
-		this.nbrSlides = 0;
 		this.mobileDown = false;
 		this.mobileDelta = 0;
 	},
@@ -56,7 +56,6 @@ module.exports = {
 				return;
 			}
 			else {
-
 				let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
 				if (delta > 0) {
@@ -88,20 +87,20 @@ module.exports = {
 			}
 		},
 
-		registerSlide: function(index) {
-			if( index != void 0 ) {
+		registerSlide: function(event) {
+			if( event != void 0 ) {
 				this.nbrSlides++;
 			}
 		},
 
 		deleterSlide: function(index) {
-			console.log('unmount slide')
+			console.log('unmount slide');
 			this.nbrSlides--;
 		},
 
 		onNext: function() {
-			this.currentIndex = (this.nbrSlides-1) - this.currentIndex <= 0 ? 0 : ++this.currentIndex,
-			this.isAnimating = true
+			this.currentIndex = (this.nbrSlides - 1) - this.currentIndex <= 0 ? 0 : ++this.currentIndex;
+			this.isAnimating  = true;
 
 			setTimeout( ()=>{
 				this.isAnimating = false;
@@ -109,8 +108,8 @@ module.exports = {
 		},
 
 		onPrev: function() {
-			this.currentIndex = this.currentIndex == 0 ? (this.nbrSlides-1) : --this.currentIndex,
-			this.isAnimating = true
+			this.currentIndex = this.currentIndex == 0 ? (this.nbrSlides-1) : --this.currentIndex;
+			this.isAnimating  = true ;
 
 			setTimeout( ()=>{
 					this.isAnimating = false

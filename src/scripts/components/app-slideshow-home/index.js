@@ -17,26 +17,11 @@ Vue.component('app-slideshow-home', {
 	    };
 	},
 
-	ready() {
-	    this.update();
-	},
-
 	methods: {
 		mouseMove: function( event ) {
 			this.mousePos.x = event.pageX;
 			this.mousePos.y = event.pageY;
-		},
-
-		update: function() {
-			// this.setState({
-			// 	mousePos: {
-			// 		x: this.state.mousePos.x + (this.mousePos.x - this.state.mousePos.x) * 0.3,
-			// 		y: this.state.mousePos.y + (this.mousePos.y - this.state.mousePos.y) * 0.3
-			// 	}
-			// });
-
-			requestAnimationFrame( this.update );
-		},
+		}
 	}
 
 });

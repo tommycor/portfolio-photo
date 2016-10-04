@@ -20,10 +20,10 @@ module.exports = {
 	},
 
 	compiled: function() {
-		this.register(this.index);
+		this.$emit('slide:register', this.index);
 	},
 
 	beforeDestroy: function() {
-		this.deleter( this.index );
+		this.$emit('slide:deleter', this.index);
 	},
 };
