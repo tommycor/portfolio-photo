@@ -1,119 +1,120 @@
-
 import isMobile from './isMobile';
 
-var Slideshow = {
+module.exports = {
 
 	mixins: [isMobile],
 
-	getInitialState: function() {
+	props: {
+		slides: 		{ type: Array, 		default: [] },
+		isScrollEnable: { type: Boolean, 	default: true },
+		duration: 		{ type: Number, 	default: 1700 },
+		mobileSwipe: 	{ type: Number, 	default: 100 },
+		isFirefox: 		{ type: Boolean, 	default: navigator.userAgent.toLowerCase().indexOf('firefox') > -1 },
+	},
+
+	data: function() {
 		return {
 			currentIndex: 0,
 			isAnimating: false,
 		};
 	},
-	getDefaultProps: function() {
-		return {
-			slides: [],
-			isScrollEnable: true,
-			duration: 1700,
-			mobileSwipe: 100,
-			isFirefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
-		};
-	},
-	componentWillMount: function() {
+
+	compiled: function() {
 		this.nbrSlides = 0;
 		this.mobileDown = false;
 		this.mobileDelta = 0;
 	},
-	componentDidMount: function() {
-		if( !this.props.isScrollEnable ) return;
 
-		if( !this.props.isFirefox ) {
+	ready: function() {
+		if( !this.isScrollEnable ) return;
+
+		if( !this.isFirefox ) {
 			document.addEventListener('mousewheel', this.onMouseWheel);
 		}
-		else if( this.props.isFirefox ) {
+		else if( this.isFirefox ) {
 			document.addEventListener('DOMMouseScroll', this.onMouseWheel);
 		}
 	},
-	componentWillUnmount: function() {
-		if( !this.props.isScrollEnable ) return;
 
-		if( !this.props.isFirefox ) {
+	beforeDestroy: function() {
+		if( !this.isScrollEnable ) return;
+
+		if( !this.isFirefox ) {
 			document.removeEventListener('mousewheel');
 		}
-		else if( this.props.isFirefox ) {
+		else if( this.isFirefox ) {
 			document.removeEventListener('DOMMouseScroll');
 		}
 	},
 
-	onMouseWheel: function(event) {
-		event.preventDefault();
+	methods: {
 
-		if (this.state.isAnimating) {
-			return;
-		}
-		else {
+		onMouseWheel: function(event) {
+			event.preventDefault();
 
-			let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
-
-			if (delta > 0) {
-				this.onPrev();
+			if (this.isAnimating) {
+				return;
 			}
-			else if (delta < 0) {
+			else {
+
+				let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+
+				if (delta > 0) {
+					this.onPrev();
+				}
+				else if (delta < 0) {
+					this.onNext();
+				}
+			}
+		},
+
+		onTouchStart: function(event) {
+			this.mobileDown = true;
+			this.mobileDelta = event.pageY;
+		},
+
+		onTouchEnd: function(event) {
+			if( !this.mobileDown ) return;
+
+			alert('NEED DEBUG MOBILE')
+
+			this.mobileDelta = event.pageY - this.mobileDelta;
+
+			if( this.mobileDelta > this.mobileSwipe ) {
 				this.onNext();
 			}
-		}
-	},
-	onTouchStart: function(event) {
-		this.mobileDown = true;
-		this.mobileDelta = event.pageY;
-	},
-	onTouchEnd: function(event) {
-		if( !this.mobileDown ) return;
+			else if( this.mobileDelta < this.mobileSwipe ) {
+				this.onPrev();
+			}
+		},
 
-		alert('NEED DEBUG MOBILE')
+		registerSlide: function(index) {
+			if( index != void 0 ) {
+				this.nbrSlides++;
+			}
+		},
 
-		this.mobileDelta = event.pageY - this.mobileDelta;
+		deleterSlide: function(index) {
+			console.log('unmount slide')
+			this.nbrSlides--;
+		},
 
-		if( this.mobileDelta > this.props.mobileSwipe ) {
-			this.onNext();
-		}
-		else if( this.mobileDelta < this.props.mobileSwipe ) {
-			this.onPrev();
-		}
-	},
-	registerSlide: function(index) {
-		if( index != void 0 ) {
-			this.nbrSlides++;
-		}
-	},
-	deleterSlide: function(index) {
-		console.log('unmount slide')
-		this.nbrSlides--;
-	},
+		onNext: function() {
+			this.currentIndex = (this.nbrSlides-1) - this.currentIndex <= 0 ? 0 : ++this.currentIndex,
+			this.isAnimating = true
 
-	onNext: function() {
-		this.setState({
-			currentIndex: (this.nbrSlides-1) - this.state.currentIndex <= 0 ? 0 : ++this.state.currentIndex,
-			isAnimating: true
-		});
-		setTimeout( ()=>{
-			this.setState({
-				isAnimating: false
-			});
-		}, this.props.duration);
-	},
-	onPrev: function() {
-		this.setState({
-			currentIndex: this.state.currentIndex == 0 ? (this.nbrSlides-1) : --this.state.currentIndex,
-			isAnimating: true
-		});
-		setTimeout( ()=>{
-			this.setState({
-				isAnimating: false
-			});
-		}, this.props.duration);
+			setTimeout( ()=>{
+				this.isAnimating = false;
+			}, this.duration);
+		},
+
+		onPrev: function() {
+			this.currentIndex = this.currentIndex == 0 ? (this.nbrSlides-1) : --this.currentIndex,
+			this.isAnimating = true
+
+			setTimeout( ()=>{
+					this.isAnimating = false
+			}, this.duration);
+		},
 	},
 };
-
-module.exports = Slideshow;

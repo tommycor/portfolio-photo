@@ -1,18 +1,29 @@
-var Slide = {
-	getDefaultProps: function() {
+module.exports = {
+
+	props: {
+		currentIndex: 	{ type: Number, default: -1 },
+		index: 			{ type: Number, default: -1 }
+	},
+
+	data: function() {
 		return {
-			index: -1,
-			status: -1,
+			status: '',
 			register: function(){},
 			deleter: function(){}
 		};
 	},
-	componentWillMount: function() {
-		this.props.register(this.props.index);
+
+	computed: {
+		status: function() {
+			return this.index < this.currentIndex ? 'prev' : this.index > this.currentIndex ? 'next' : 'current';
+		}
 	},
-	componentWillUnmount: function() {
-		this.props.deleter( this.props.index );
+
+	compiled: function() {
+		this.register(this.index);
+	},
+
+	beforeDestroy: function() {
+		this.deleter( this.index );
 	},
 };
-
-module.exports = Slide;

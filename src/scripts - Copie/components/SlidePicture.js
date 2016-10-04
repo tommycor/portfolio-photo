@@ -76,7 +76,7 @@ var SlidePicture = React.createClass({
 			this.currentPos.x += ( this.pos.x - this.currentPos.x) * 0.05;
 			this.currentPos.y += ( this.pos.y - this.currentPos.y) * 0.05;
 
-			this.picture.style.transform = 'rotateX('+this.currentRot.y+'rad) rotateY('+this.currentRot.x+'rad) translateX('+this.currentPos.x+'px) translateY('+this.currentPos.y+'px) translateZ(0)';			
+			this.picture.style.transform = 'rotateX('+this.currentRot.y+'rad) rotateY('+this.currentRot.x+'rad) translateX('+this.currentPos.x+'px) translateY('+this.currentPos.y+'px) translateZ(0)'	;		
 		}
 
 
