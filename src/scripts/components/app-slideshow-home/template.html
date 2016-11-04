@@ -1,4 +1,4 @@
-<div class="u-fit u-block u-relative u-vacuum" @touchstart="onTouchStart" @touchend="onTouchEnd" @mousemove="mouseMove" >
+<div class="u-fit u-block u-relative u-vacuum" @touchstart="onTouchStart" @touchend="onTouchEnd" @mousemove="onMouseMove"  @click="onClick">
 	<div class="o-wrapper--valign u-fit-h u-w2of12 u-inline-block">
 		<app-slide-data v-for="( index, item ) in slides" :current-index="currentIndex" :index="index" :content="item"></app-slide-data>
 	</div>

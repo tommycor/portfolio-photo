@@ -48,7 +48,7 @@ var config  = {
 
 
 var isWatching = true;
-var rootPath   = path.dirname() + '/';
+var rootPath   = __dirname + '/';
 
 
 // clean (remove sourcemaps on build)

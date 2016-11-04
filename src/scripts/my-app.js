@@ -4,58 +4,70 @@ new Vue({
 	el: '#my-app',
 	data: function() {
 		return {
-			routes: {
-				"/": {
+			states: {
+				":": {
 					"componentId": "page-home",
-					"dataUrl": "./wp-json/api/pages/api-home",
-					"pageColor":"#74c8ea",
-					"pageIndex": 0
+					"datas": {},
+					"route":"/",
 				},
-				"/home": {
-					"componentId": "page-home",
-					"dataUrl": "./wp-json/api/pages/api-home",
-					"pageColor":"#74c8ea",
-					"pageIndex": 0
-				 
+				":slug": {
+					"componentId": "page-album",
+					"datas": { 
+						slug: ''
+					},
+					"route":"/slug",
 				},
-				"/:slug": {
-					"componentId": "page-careers",
-					"dataUrl": "./wp-json/api/jobs/",
-					"pageColor":"#74c8ea",
-					"pageIndex": 7
-				},
-				"/404": {
-					"componentId": "page-404",
-					"dataUrl": "./wp-content/themes/tenAdams-theme/assets/data/404.json",
-					"pageColor": "linear-gradient(to bottom, #f78714, #f3751b)"
-				}
 			},
 			albums: [{
-					key: 1,
+					id: 1,
 					picture: './assets/medias/TEMP/01.jpg',
 					title: 'By the ocean'
 				},{
-					key: 2,
+					id: 2,
 					picture: './assets/medias/TEMP/02.jpg',
 					title: 'Dolorem ipsum sit amet'
 				},{
-					key: 3,
+					id: 3,
 					picture: './assets/medias/TEMP/03.jpg',
 					title: "Malo's days"
 				},{
-					key: 3,
+					id: 3,
 					picture: './assets/medias/TEMP/04.jpg',
 					title: 'Day dreaming'
 				}
 			]
 		};
 	},
+	props: {
+		isAlbum: 		{ type: Boolean, 	default: false },
+		isShowAlbum: 	{ type: Boolean, 	default: false },
+		albumData: 		{ type: Object, 	default: {} },
+	},
 	ready() {
+
 		window.addEventListener('resize', ()=> {
-			this.$emit('resize');
+			this.$broadcast('resize');
 		});
+
+		this.$on('nav', this.changeNav);
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize');
+	},
+	methods: {
+		changeNav( event ) {
+
+			if( event.component == 'my-album' ) {
+				this.isAlbum 		= true;
+				this.albumData 		= event.datas;
+				this.isShowAlbum	= true;
+			}
+
+		}
 	}
 });
+
+// $on() - allows you to declare a listener on your Vue instance with which to listen to events
+// $emit() - allows you to trigger events on the same instance (self)
+// $dispatch() - send an event upward along the parent chain
+// $broadcast() - send an event downward along the descendants chain

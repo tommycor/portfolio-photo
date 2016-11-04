@@ -41,15 +41,12 @@ Vue.component('app-slide-picture', {
 	methods: {
 
 		handleResize: function( event ) {
-			console.log('resize');
-			this.setState({
-				winWidth: window.innerWidth,
-				winHeight: window.innerHeight,
-				winCenter: {
-					x: window.innerWidth * .5,
-					y: window.innerHeight * .5,
-				}			
-			});
+			this.winWidth = window.innerWidth;
+			this.winHeight = window.innerHeight;
+			this.winCenter = {
+				x: window.innerWidth * .5,
+				y: window.innerHeight * .5,
+			};
 		},
 
 		update: function() {
@@ -60,7 +57,7 @@ Vue.component('app-slide-picture', {
 				let distY = this.mousePos.y - this.winCenter.y;
 				let dist = Math.sqrt(distX * distX + distY * distY);
 
-				let maxR = .0000005;
+				let maxR = .0000003;
 
 				this.rot.x = -maxR * distX * dist ;
 				this.rot.y = maxR * distY * dist * 1.5;
@@ -71,12 +68,11 @@ Vue.component('app-slide-picture', {
 				this.pos.x = -distX * .03;
 				this.pos.y = -distY * .03;
 
-				this.currentPos.x += ( this.pos.x - this.currentPos.x) * 0.05;
-				this.currentPos.y += ( this.pos.y - this.currentPos.y) * 0.05;
+				this.currentPos.x += ( this.pos.x - this.currentPos.x) * 0.03;
+				this.currentPos.y += ( this.pos.y - this.currentPos.y) * 0.03;
 
 				this.$els.picture.style.transform = 'rotateX('+this.currentRot.y+'rad) rotateY('+this.currentRot.x+'rad) translateX('+this.currentPos.x+'px) translateY('+this.currentPos.y+'px) translateZ(0)'	;		
 			}
-
 
 			requestAnimationFrame( this.update );
 		},

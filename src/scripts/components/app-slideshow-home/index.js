@@ -18,9 +18,16 @@ Vue.component('app-slideshow-home', {
 	},
 
 	methods: {
-		mouseMove: function( event ) {
+		onMouseMove: function( event ) {
 			this.mousePos.x = event.pageX;
 			this.mousePos.y = event.pageY;
+		},
+		onClick: function( event ) {
+			if( this.slides[ this.currentIndex ] == void 0 ) { return; };
+
+			let currentSlide = this.slides[ this.currentIndex ];
+
+			this.$dispatch('nav', { component: 'my-album',  data: 'currentSlide'} );
 		}
 	}
 
