@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import stateInitializer from './mixins/stateInitializer';
+
 new Vue({
 	el: '#my-app',
 	data: function() {
@@ -35,13 +37,28 @@ new Vue({
 					picture: './assets/medias/TEMP/04.jpg',
 					title: 'Day dreaming'
 				}
-			]
+			],
+			fakeAlbumsDatas: [{
+					id: 1,
+					picture: './assets/medias/TEMP/02.jpg',
+				},{
+					id: 2,
+					picture: './assets/medias/TEMP/06.jpg',
+				},{
+					id: 3,
+					picture: './assets/medias/TEMP/07.jpg',
+				},{
+					id: 3,
+					picture: './assets/medias/TEMP/08.jpg',
+				}
+			],
 		};
 	},
+	mixins: [stateInitializer],
 	props: {
-		isAlbum: 		{ type: Boolean, 	default: false },
-		isShowAlbum: 	{ type: Boolean, 	default: false },
-		albumData: 		{ type: Object, 	default: {} },
+		isAlbum: 		{ type: Boolean, default: false },
+		isShowAlbum: 	{ type: Boolean, default: false },
+		albumData: 		{ type: Object,  default: null },
 	},
 	ready() {
 
@@ -59,7 +76,7 @@ new Vue({
 
 			if( event.component == 'my-album' ) {
 				this.isAlbum 		= true;
-				this.albumData 		= event.datas;
+				this.albumData 		= event.data;
 				this.isShowAlbum	= true;
 			}
 

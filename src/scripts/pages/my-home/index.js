@@ -5,7 +5,7 @@ Vue.component('my-home', {
 	template: require('./template'),
 
 	props: {
-		datas: {type: Array, default: [] }
+		datas: { type: Array, default: [] }
 	},
 
 });
