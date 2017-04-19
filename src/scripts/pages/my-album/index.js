@@ -10,7 +10,7 @@ Vue.component('my-album', {
 	},
 
 	ready() {
-		console.log(this.pictures);
+		// console.log(this.pictures);
 	}
 
 });
